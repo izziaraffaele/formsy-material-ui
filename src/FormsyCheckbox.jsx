@@ -1,10 +1,10 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import Checkbox from 'material-ui/lib/checkbox';
-import { _setMuiComponentAndMaybeFocus } from './utils';
+import Checkbox from 'material-ui/Checkbox';
+import {_setMuiComponentAndMaybeFocus} from './utils';
 
-let FormsyCheckbox = React.createClass({
-  mixins: [ Formsy.Mixin ],
+const FormsyCheckbox = React.createClass({
+  mixins: [Formsy.Mixin],
 
   propTypes: {
     name: React.PropTypes.string.isRequired
@@ -22,15 +22,20 @@ let FormsyCheckbox = React.createClass({
   _setMuiComponentAndMaybeFocus: _setMuiComponentAndMaybeFocus,
 
   render: function () {
+    var value = this.getValue();
+    var defaultChecked = this.props.defaultChecked;
+    if (typeof(value) === 'undefined') 
+      value = typeof defaultChecked !== 'undefined' ? defaultChecked : false;
+    
     return (
       <Checkbox
         {...this.props}
         ref={this._setMuiComponentAndMaybeFocus}
         onCheck={this.handleValueChange}
-        checked={this.getValue()}
+        checked={value}
       />
     );
   }
 });
 
-module.exports = FormsyCheckbox;
+export default FormsyCheckbox;
