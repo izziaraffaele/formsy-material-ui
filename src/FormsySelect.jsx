@@ -1,38 +1,42 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import SelectField from 'material-ui/SelectField';
-import {_setMuiComponentAndMaybeFocus} from './utils';
+import {setMuiComponentAndMaybeFocus} from './utils';
 
 let FormsySelect = React.createClass({
   mixins: [Formsy.Mixin],
 
   propTypes: {
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       hasChanged: false,
     };
   },
 
-  handleChange: function (event, index, value) {
+  handleChange(event, index, value) {
     this.setValue(value);
     this.setState({hasChanged: value !== ''});
     if (this.props.onChange) this.props.onChange(event, value, index);
   },
 
-  _setMuiComponentAndMaybeFocus: _setMuiComponentAndMaybeFocus,
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
 
-  render: function () {
-    var value = this.state.hasChanged ? this.getValue() : this.props.value;
+  render() {
+    
+    let {value, ...rest} = this.props;
+    
+    value = this.state.hasChanged ? this.getValue() : value;
 
     return (
       <SelectField
-        {...this.props}
-        ref={this._setMuiComponentAndMaybeFocus}
-        onChange={this.handleChange}
+        {...rest}
         errorText={this.getErrorMessage()}
+        onChange={this.handleChange}
+        ref={this.setMuiComponentAndMaybeFocus}
         value={value}
       >
         {this.props.children}

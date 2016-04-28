@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
-import { _setMuiComponentAndMaybeFocus } from './utils';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsyRadioGroup = React.createClass({
   mixins: [Formsy.Mixin],
@@ -10,22 +10,22 @@ const FormsyRadioGroup = React.createClass({
     name: React.PropTypes.string.isRequired
   },
 
-  handleValueChange: function (event, value) {
+  handleValueChange(event, value) {
     this.setValue(value);
     if (this.props.onChange) this.props.onChange(event, value);
   },
 
-  componentDidMount: function () {
-    this.setValue(this._muiComponent.getSelectedValue());
+  componentDidMount() {
+    this.setValue(this.muiComponent.getSelectedValue());
   },
 
-  _setMuiComponentAndMaybeFocus: _setMuiComponentAndMaybeFocus,
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
 
-  render: function () {
+  render() {
     return (
       <RadioButtonGroup
         {...this.props}
-        ref={this._setMuiComponentAndMaybeFocus}
+        ref={this.setMuiComponentAndMaybeFocus}
         onChange={this.handleValueChange}
       >
         {this.props.children}
