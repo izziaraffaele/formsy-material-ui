@@ -2,27 +2,30 @@ import React from 'react';
 import keycode from 'keycode';
 import Formsy from 'formsy-react';
 import TextField from 'material-ui/TextField';
-import {setMuiComponentAndMaybeFocus} from './utils';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
-let FormsyText = React.createClass({
-  mixins: [ Formsy.Mixin ],
+const FormsyText = React.createClass({
 
   propTypes: {
-    name: React.PropTypes.string.isRequired,
     defaultValue: React.PropTypes.any,
-    value: React.PropTypes.any,
+    name: React.PropTypes.string.isRequired,
+    onBlur: React.PropTypes.func,
+    onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func
+    onKeyDown: React.PropTypes.func,
+    value: React.PropTypes.any,
   },
 
-  componentWillMount() {
-    this.setValue(this.props.defaultValue || this.props.value || '');
-  },
+  mixins: [Formsy.Mixin],
 
   getInitialState() {
     return {
       value: this.props.defaultValue || this.props.value || '',
-    }
+    };
+  },
+
+  componentWillMount() {
+    this.setValue(this.props.defaultValue || this.props.value || '');
   },
 
   handleBlur: function(event) {
@@ -32,7 +35,7 @@ let FormsyText = React.createClass({
 
   handleChange: function(event) {
     this.setState({
-      value: event.currentTarget.value
+      value: event.currentTarget.value,
     });
     if (this.props.onChange) this.props.onChange(event);
   },
@@ -45,7 +48,11 @@ let FormsyText = React.createClass({
   setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
 
   render() {
-    const {defaultValue, onFocus, value, ...rest} = this.props;
+    const {
+      defaultValue, // eslint-disable-line no-unused-vars
+      onFocus,
+      value, // eslint-disable-line no-unused-vars
+      ...rest } = this.props;
     return (
       <TextField
         {...rest}
@@ -58,7 +65,7 @@ let FormsyText = React.createClass({
         value={this.state.value}
       />
     );
-  }
+  },
 });
 
-export default  FormsyText;
+export default FormsyText;
